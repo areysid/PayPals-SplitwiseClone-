@@ -15,7 +15,6 @@ From splitting chai bills to managing Goa trip expenses, PayPals makes it easy t
 - **🤝 Settlements** – Record payments and settle debts easily.
 - **🔐 Auth & Permissions** – Secure authentication and role-based group permissions.
 - **📩 Email Reminders** – Payment reminders powered by Convex & Inngest.
-- **🎭 Fun UI & Branding** – Themed with Hera Pheri-style humor and a twist on traditional expense tracking.
 
 ---
 
@@ -59,7 +58,7 @@ areysid-paypals-splitwiseclone-/
    ```bash
    git clone https://github.com/<your-username>/paypals.git
    cd paypals
-````
+
 
 2. **Install dependencies**
 
