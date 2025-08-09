@@ -1,6 +1,4 @@
-Here’s your **all-in-one README.md** file ready to drop straight into your repo:
 
-```markdown
 # 💸 PayPals – The Quirky Splitwise Clone
 
 
