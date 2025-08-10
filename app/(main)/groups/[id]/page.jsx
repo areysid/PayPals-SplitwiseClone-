@@ -87,7 +87,7 @@ export default function GroupExpensesPage() {
               </Link>
             </Button>
             <Button asChild>
-              <Link href={`/expenses/new`}>
+              <Link href={`/expenses/new?type=group&groupId=${params.id}`}>
                 <PlusCircle className="mr-2 h-4 w-4" />
                 Add expense
               </Link>

@@ -1,12 +1,18 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ExpenseForm } from "./components/expense-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function NewExpensePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Read ?type= and ?groupId= from the URL
+  const typeParam = searchParams.get("type");
+  const groupId = searchParams.get("groupId");
+  const defaultTab = typeParam === "group" ? "group" : "individual";
 
   return (
     <div className="container max-w-3xl mx-auto py-6">
@@ -19,20 +25,23 @@ export default function NewExpensePage() {
 
       <Card>
         <CardContent>
-          <Tabs className="pb-3" defaultValue="individual">
+          <Tabs className="pb-3" defaultValue={defaultTab}>
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="individual">Individual Expense</TabsTrigger>
               <TabsTrigger value="group">Group Expense</TabsTrigger>
             </TabsList>
+
             <TabsContent value="individual" className="mt-0">
               <ExpenseForm
                 type="individual"
                 onSuccess={(id) => router.push(`/person/${id}`)}
               />
             </TabsContent>
+
             <TabsContent value="group" className="mt-0">
               <ExpenseForm
                 type="group"
+                groupId={groupId} // Pass the groupId to auto-fill the group
                 onSuccess={(id) => router.push(`/groups/${id}`)}
               />
             </TabsContent>

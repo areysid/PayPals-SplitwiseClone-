@@ -86,39 +86,141 @@ export function SplitSelector({
   }, [type, amount, participants, paidByUserId, onSplitsChange]);
 
   // Update the percentage splits - no automatic adjustment of other values
-  const updatePercentageSplit = (userId, newPercentage) => {
-    // Update just this user's percentage and recalculate amount
-    const updatedSplits = splits.map((split) => {
-      if (split.userId === userId) {
-        return {
-          ...split,
-          percentage: newPercentage,
-          amount: (amount * newPercentage) / 100,
-        };
-      }
-      return split;
-    });
+  // const updatePercentageSplit = (userId, newPercentage) => {
+  //   // Update just this user's percentage and recalculate amount
+  //   const updatedSplits = splits.map((split) => {
+  //     if (split.userId === userId) {
+  //       return {
+  //         ...split,
+  //         percentage: newPercentage,
+  //         amount: (amount * newPercentage) / 100,
+  //       };
+  //     }
+  //     return split;
+  //   });
+
+  //   setSplits(updatedSplits);
+
+  //   // Recalculate totals
+  //   const newTotalAmount = updatedSplits.reduce(
+  //     (sum, split) => sum + split.amount,
+  //     0
+  //   );
+  //   const newTotalPercentage = updatedSplits.reduce(
+  //     (sum, split) => sum + split.percentage,
+  //     0
+  //   );
+
+  //   setTotalAmount(newTotalAmount);
+  //   setTotalPercentage(newTotalPercentage);
+
+  //   // Notify parent about the split changes
+  //   if (onSplitsChange) {
+  //     onSplitsChange(updatedSplits);
+  //   }
+  // };
+
+//   const updatePercentageSplit = (userId, newPercentage) => {
+//   const clamped = Math.max(0, Math.min(100, newPercentage));
+
+//   // Find the participant being updated
+//   const index = splits.findIndex((s) => s.userId === userId);
+//   if (index === -1) return;
+
+//   const current = splits[index];
+//   const others = splits.filter((_, i) => i !== index);
+
+//   // Remaining percentage to distribute
+//   let remainingPercentage = 100 - clamped;
+
+//   // If there are others, adjust them proportionally
+//   let totalOtherPercent = others.reduce((sum, s) => sum + s.percentage, 0);
+//   const updatedOthers =
+//     totalOtherPercent > 0
+//       ? others.map((s) => ({
+//           ...s,
+//           percentage: (s.percentage / totalOtherPercent) * remainingPercentage,
+//         }))
+//       : others.map((s) => ({
+//           ...s,
+//           percentage: remainingPercentage / others.length,
+//         }));
+
+//   // Combine updated splits
+//   const updatedSplits = [
+//     { ...current, percentage: clamped },
+//     ...updatedOthers,
+//   ].map((s) => ({
+//     ...s,
+//     amount: (amount * s.percentage) / 100,
+//   }));
+
+//   setSplits(updatedSplits);
+
+//   // Update totals
+//   const newTotalAmount = updatedSplits.reduce(
+//     (sum, split) => sum + split.amount,
+//     0
+//   );
+//   const newTotalPercentage = updatedSplits.reduce(
+//     (sum, split) => sum + split.percentage,
+//     0
+//   );
+
+//   setTotalAmount(newTotalAmount);
+//   setTotalPercentage(newTotalPercentage);
+
+//   if (onSplitsChange) {
+//     onSplitsChange(updatedSplits);
+//   }
+// };
+
+const isGroupExpense = splits.length > 2;
+
+
+const updatePercentageSplit = (userId, newPercentage) => {
+  if (isGroupExpense) {
+    // GROUP LOGIC: lock values, show remaining
+    const clamped = Math.max(0, Math.min(100, newPercentage));
+
+    const updatedSplits = splits.map((s) =>
+      s.userId === userId
+        ? { ...s, percentage: clamped, amount: (amount * clamped) / 100 }
+        : s
+    );
 
     setSplits(updatedSplits);
 
-    // Recalculate totals
-    const newTotalAmount = updatedSplits.reduce(
-      (sum, split) => sum + split.amount,
-      0
-    );
-    const newTotalPercentage = updatedSplits.reduce(
-      (sum, split) => sum + split.percentage,
-      0
-    );
+    const newTotalAmount = updatedSplits.reduce((sum, split) => sum + split.amount, 0);
+    const newTotalPercentage = updatedSplits.reduce((sum, split) => sum + split.percentage, 0);
 
     setTotalAmount(newTotalAmount);
     setTotalPercentage(newTotalPercentage);
 
-    // Notify parent about the split changes
     if (onSplitsChange) {
       onSplitsChange(updatedSplits);
     }
-  };
+  } else {
+    // ONE-ON-ONE LOGIC: proportional adjustment
+    const clamped = Math.max(0, Math.min(100, newPercentage));
+
+    const updatedSplits = splits.map((s) =>
+      s.userId === userId
+        ? { ...s, percentage: clamped, amount: (amount * clamped) / 100 }
+        : { ...s, percentage: 100 - clamped, amount: (amount * (100 - clamped)) / 100 }
+    );
+
+    setSplits(updatedSplits);
+    setTotalAmount(amount);
+    setTotalPercentage(100);
+
+    if (onSplitsChange) {
+      onSplitsChange(updatedSplits);
+    }
+  }
+};
+
+
 
   // Update the exact amount splits - no automatic adjustment of other values
   const updateExactSplit = (userId, newAmount) => {
