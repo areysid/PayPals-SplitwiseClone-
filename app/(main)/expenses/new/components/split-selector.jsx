@@ -120,61 +120,6 @@ export function SplitSelector({
   //   }
   // };
 
-//   const updatePercentageSplit = (userId, newPercentage) => {
-//   const clamped = Math.max(0, Math.min(100, newPercentage));
-
-//   // Find the participant being updated
-//   const index = splits.findIndex((s) => s.userId === userId);
-//   if (index === -1) return;
-
-//   const current = splits[index];
-//   const others = splits.filter((_, i) => i !== index);
-
-//   // Remaining percentage to distribute
-//   let remainingPercentage = 100 - clamped;
-
-//   // If there are others, adjust them proportionally
-//   let totalOtherPercent = others.reduce((sum, s) => sum + s.percentage, 0);
-//   const updatedOthers =
-//     totalOtherPercent > 0
-//       ? others.map((s) => ({
-//           ...s,
-//           percentage: (s.percentage / totalOtherPercent) * remainingPercentage,
-//         }))
-//       : others.map((s) => ({
-//           ...s,
-//           percentage: remainingPercentage / others.length,
-//         }));
-
-//   // Combine updated splits
-//   const updatedSplits = [
-//     { ...current, percentage: clamped },
-//     ...updatedOthers,
-//   ].map((s) => ({
-//     ...s,
-//     amount: (amount * s.percentage) / 100,
-//   }));
-
-//   setSplits(updatedSplits);
-
-//   // Update totals
-//   const newTotalAmount = updatedSplits.reduce(
-//     (sum, split) => sum + split.amount,
-//     0
-//   );
-//   const newTotalPercentage = updatedSplits.reduce(
-//     (sum, split) => sum + split.percentage,
-//     0
-//   );
-
-//   setTotalAmount(newTotalAmount);
-//   setTotalPercentage(newTotalPercentage);
-
-//   if (onSplitsChange) {
-//     onSplitsChange(updatedSplits);
-//   }
-// };
-
 const isGroupExpense = splits.length > 2;
 
 
@@ -378,3 +323,58 @@ const updatePercentageSplit = (userId, newPercentage) => {
     </div>
   );
 }
+
+//   const updatePercentageSplit = (userId, newPercentage) => {
+//   const clamped = Math.max(0, Math.min(100, newPercentage));
+
+//   // Find the participant being updated
+//   const index = splits.findIndex((s) => s.userId === userId);
+//   if (index === -1) return;
+
+//   const current = splits[index];
+//   const others = splits.filter((_, i) => i !== index);
+
+//   // Remaining percentage to distribute
+//   let remainingPercentage = 100 - clamped;
+
+//   // If there are others, adjust them proportionally
+//   let totalOtherPercent = others.reduce((sum, s) => sum + s.percentage, 0);
+//   const updatedOthers =
+//     totalOtherPercent > 0
+//       ? others.map((s) => ({
+//           ...s,
+//           percentage: (s.percentage / totalOtherPercent) * remainingPercentage,
+//         }))
+//       : others.map((s) => ({
+//           ...s,
+//           percentage: remainingPercentage / others.length,
+//         }));
+
+//   // Combine updated splits
+//   const updatedSplits = [
+//     { ...current, percentage: clamped },
+//     ...updatedOthers,
+//   ].map((s) => ({
+//     ...s,
+//     amount: (amount * s.percentage) / 100,
+//   }));
+
+//   setSplits(updatedSplits);
+
+//   // Update totals
+//   const newTotalAmount = updatedSplits.reduce(
+//     (sum, split) => sum + split.amount,
+//     0
+//   );
+//   const newTotalPercentage = updatedSplits.reduce(
+//     (sum, split) => sum + split.percentage,
+//     0
+//   );
+
+//   setTotalAmount(newTotalAmount);
+//   setTotalPercentage(newTotalPercentage);
+
+//   if (onSplitsChange) {
+//     onSplitsChange(updatedSplits);
+//   }
+// };
