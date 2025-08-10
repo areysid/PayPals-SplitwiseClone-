@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# 💸 PayPals – The Quirky Splitwise Clone
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+PayPals is a full-stack **bill-splitting and expense-tracking app** inspired by Splitwise — but with more personality, humor, and a sprinkle of *Hera Pheri* charm.  
+From splitting chai bills to managing Goa trip expenses, PayPals makes it easy to track who owes whom — **without anyone doing "25 din me paisa double" schemes**.
+
+---
+
+## 🚀 Features
+
+- **👥 Group Management** – Create, edit, and delete groups for any trip, party, or event.
+- **💵 Smart Expense Splitting** – Split bills equally or unequally, choose categories, and add participants.
+- **📊 Dashboard Insights** – See balance summaries, expense breakdowns, and settlement histories.
+- **🤝 Settlements** – Record payments and settle debts easily.
+- **🔐 Auth & Permissions** – Secure authentication and role-based group permissions.
+- **📩 Email Reminders** – Payment reminders powered by Convex & Inngest.
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend**
+- [Next.js 14](https://nextjs.org/) – App Router, layouts, API routes
+- [Tailwind CSS](https://tailwindcss.com/) – Utility-first styling
+- [Shadcn/ui](https://ui.shadcn.com/) – Accessible UI components
+- [Sonner](https://sonner.emilkowal.ski/) – Toast notifications
+
+**Backend**
+- [Convex](https://convex.dev/) – Realtime database & serverless functions
+- [Inngest](https://www.inngest.com/) – Background jobs & reminders
+
+**Other**
+- [Resend](https://resend.com/) – Transactional email delivery
+- ESLint + Prettier – Code linting & formatting
+
+---
+
+## 📂 Project Structure
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+areysid-paypals-splitwiseclone-/
+├── app/               # Next.js App Router pages & layouts
+├── components/        # UI & feature components
+├── convex/            # Convex backend functions & schema
+├── hooks/             # Custom React hooks
+├── lib/               # Utility functions & configs
+└── public/            # Static assets (images, icons, etc.)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+````
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ⚙️ Installation & Setup
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/<your-username>/paypals.git
+   cd paypals
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install dependencies**
 
-## Deploy on Vercel
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Set up environment variables**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   * Copy `.env.example` to `.env.local`
+   * Add your **Convex**, **Resend**, and **Inngest** API keys
+
+4. **Run Convex backend**
+
+   ```bash
+   npx convex dev
+   ```
+
+5. **Run Next.js app**
+
+   ```bash
+   npm run dev
+   ```
+
+6. **Visit**
+
+   ```
+   http://localhost:3000
+   ```
+
+---
+
